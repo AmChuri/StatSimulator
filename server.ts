@@ -77,6 +77,7 @@ app.get('/api/cpu', (req, res) => {
 app.get('/api/data', async (req: Request, res: Response) => {
   console.log('hit data');
   const uri = process.env.ATLAS ?? '';
+  console.log(uri);
   const dbName = 'systemMetrics';
   const collectionName = 'metrics';
 
