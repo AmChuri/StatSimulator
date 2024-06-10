@@ -19,5 +19,7 @@ RUN npm run build
 # Expose port 8080 to the outside world
 EXPOSE 8080
 
+ENV PORT 8080
+
 # Run the compiled JavaScript file when the container starts
 CMD ["node", "dist/server.js"]
