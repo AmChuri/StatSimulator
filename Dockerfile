@@ -5,6 +5,8 @@ WORKDIR /usr/src/app
 
 ENV HOST 0.0.0.0
 
+ENV HOSTNAME "0.0.0.0"
+
 # Copy the package.json and package-lock.json files to the working directory
 COPY package*.json ./
 
