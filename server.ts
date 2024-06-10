@@ -76,7 +76,9 @@ app.get('/api/cpu', (req, res) => {
 
 app.get('/api/data', async (req: Request, res: Response) => {
   console.log('hit data');
-  const uri = process.env.ATLAS ?? '';
+  // const uri = process.env.ATLAS ?? '';
+  const uri =
+    'mongodb+srv://churiamay:nugLEdFGbGQCZ2bD@off-grid.b9pnqya.mongodb.net/?retryWrites=true&w=majority&appName=off-grid';
   console.log(uri);
   const dbName = 'systemMetrics';
   const collectionName = 'metrics';
@@ -119,7 +121,9 @@ cron.schedule('* * * * *', async () => {
     'Task is running every minute:',
     new Date().toISOString()
   );
-  const uri = process.env.ATLAS ?? '';
+  // const uri = process.env.ATLAS ?? '';
+  const uri =
+    'mongodb+srv://churiamay:nugLEdFGbGQCZ2bD@off-grid.b9pnqya.mongodb.net/?retryWrites=true&w=majority&appName=off-grid';
   const dbName = 'systemMetrics';
   const collectionName = 'metrics';
   console.log(uri);
