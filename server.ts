@@ -1,4 +1,5 @@
 import { faker } from '@faker-js/faker';
+import cors from 'cors';
 import { endOfDay, parseISO, startOfDay } from 'date-fns';
 import dotenv from 'dotenv';
 import express, { Request, Response } from 'express';
@@ -13,6 +14,8 @@ interface SystemMetrics {
 }
 
 const app = express();
+
+app.use(cors());
 dotenv.config();
 const port = process.env.PORT;
 let latestMetrics: SystemMetrics | null = null;
@@ -71,6 +74,7 @@ app.get('/api/cpu', (req, res) => {
 });
 
 app.get('/api/data', async (req: Request, res: Response) => {
+  console.log('hit data');
   const uri = process.env.ATLAS ?? '';
   const dbName = 'systemMetrics';
   const collectionName = 'metrics';
@@ -102,6 +106,7 @@ app.get('/api/data', async (req: Request, res: Response) => {
         $lte: endDate,
       },
     })
+    .sort({ timestamp: 1 })
     .toArray();
 
   res.json(data);
