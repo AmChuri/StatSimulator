@@ -4,6 +4,7 @@ import { endOfDay, parseISO, startOfDay } from 'date-fns';
 import dotenv from 'dotenv';
 import express, { Request, Response } from 'express';
 import { MongoClient } from 'mongodb';
+import cron from 'node-cron';
 
 interface SystemMetrics {
   timestamp: Date;
@@ -112,24 +113,39 @@ app.get('/api/data', async (req: Request, res: Response) => {
   res.json(data);
 });
 
-async function main() {
+cron.schedule('* * * * *', async () => {
+  console.log(
+    'Task is running every minute:',
+    new Date().toISOString()
+  );
   const uri = process.env.ATLAS ?? '';
   const dbName = 'systemMetrics';
   const collectionName = 'metrics';
   console.log(uri);
   const client = await connectToDatabase(uri);
+  const metrics = generateRandomMetrics();
+  latestMetrics = metrics; // Update the latest metrics
+  await saveMetrics(client, dbName, collectionName, metrics);
+});
 
-  // Simulate data every second
-  setInterval(async () => {
-    const metrics = generateRandomMetrics();
-    latestMetrics = metrics; // Update the latest metrics
-    await saveMetrics(client, dbName, collectionName, metrics);
-  }, 60000);
+// async function main() {
+//   const uri = process.env.ATLAS ?? '';
+//   const dbName = 'systemMetrics';
+//   const collectionName = 'metrics';
+//   console.log(uri);
+//   const client = await connectToDatabase(uri);
 
-  // Start the Express server
-  app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
-  });
-}
+//   // Simulate data every second
+//   setInterval(async () => {
+//     const metrics = generateRandomMetrics();
+//     latestMetrics = metrics; // Update the latest metrics
+//     await saveMetrics(client, dbName, collectionName, metrics);
+//   }, 60000);
 
-main().catch(console.error);
+//   // Start the Express server
+// }
+
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
+});
+// main().catch(console.error);
