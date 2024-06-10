@@ -116,7 +116,7 @@ async function main() {
   const uri = process.env.ATLAS ?? '';
   const dbName = 'systemMetrics';
   const collectionName = 'metrics';
-
+  console.log(uri);
   const client = await connectToDatabase(uri);
 
   // Simulate data every second
