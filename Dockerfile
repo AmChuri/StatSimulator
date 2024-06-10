@@ -16,8 +16,8 @@ COPY . .
 # Build TypeScript code
 RUN npm run build
 
-# Expose port 3000 to the outside world
-EXPOSE 3000
+# Expose port 8080 to the outside world
+EXPOSE 8080
 
 # Run the compiled JavaScript file when the container starts
 CMD ["node", "dist/server.js"]
